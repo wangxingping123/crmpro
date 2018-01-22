@@ -1,0 +1,55 @@
+<hr>
+<form method="post" class="form-horizontal" novalidate>
+        {% csrf_token %}
+        {% for dic in form %}
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{ dic.item.label }}</label>
+                    <div class="col-sm-9">
+
+                        {% if dic.is_popup %}
+                            <div class="row">
+                            <div class="col-sm-6" style="position: relative">
+                               {{ dic.item }}
+                            </div>
+                            <div class="col-sm-3">
+                                <a onclick="popUp('{{ dic.popurl }}')"><span class="glyphicon glyphicon-plus">添加</span></a>
+                            </div>
+
+                            </div>
+                        {% else %}
+                            {{ dic.item }}
+                        {% endif %}
+                    <div class="errors" style="position: absolute;color: red;font-size: 12px;">
+                        {{ dic.item.errors }}
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+        <div class="col-sm-1 col-sm-offset-9">
+            <input class="btn btn-primary" type="submit" value="提交">
+        </div>
+    </form>
+
+<script>
+
+    function popupCallback(dic) {
+        if (dic){
+            var option = document.createElement('option');
+            option.value = dic.id;
+            option.text = dic.text;
+            option.setAttribute('selected','selected');
+            document.getElementById(dic.popbackid).appendChild(option);
+        }
+
+    }
+
+    function popUp(url) {
+        console.log(url);
+        var popupPage = window.open(url, url, "status=1, height:500, width:600, toolbar=0, resizeable=0");
+    }
+
+</script>

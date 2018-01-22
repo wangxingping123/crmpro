@@ -1,0 +1,44 @@
+{% extends "crud/layout.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>抢单列表</h2>
+    <hr>
+    {% if public_coustomer_list %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>qq号</th>
+                    <th>状态</th>
+                    <th>抢单</th>
+                </tr>
+            </thead>
+        <tbody>
+        {% for customer in public_coustomer_list %}
+        <tr>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.get_gender_display }}</td>
+        <td>{{ customer.qq }}</td>
+        <td>{{ customer.get_status_display }}</td>
+        <td>
+            {% if customer.consultant_id == current_user_id %}
+                <a href="#">无权抢单</a>
+                {% else %}
+                 <a href="/crm/app01/customer/{{ customer.id }}/competition/">抢单</a>
+            {% endif %}
+
+        </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+        </table>
+    {% else %}
+        <h3>暂时没有可以抢单的客户哦!</h3>
+    {% endif %}
+
+</div>
+{% endblock %}

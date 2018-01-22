@@ -1,0 +1,37 @@
+{% extends "crud/layout.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="container">
+    <h2>学生成绩录入</h2>
+    <form method="post">
+        {% csrf_token %}
+       <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>姓名</th>
+            <th>班级</th>
+            <th>出勤情况</th>
+            <th>得分</th>
+            <th>评语</th>
+        </tr>
+        </thead>
+       <tbody>
+        {% for dic in datalist %}
+            <tr>
+            <td>{{ dic.obj.student }}</td>
+            <td>{{ dic.obj.course_record }}</td>
+            <td>{{ dic.obj.get_record_display }}</td>
+             {% for field in dic.form %}
+                <td>{{ field  }}</td>
+                {% endfor %}
+            </tr>
+
+        {% endfor %}
+       </tbody>
+    </table>
+     <input class="btn btn-primary pull-right" type="submit" value="提交">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "crud/layout.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="container">
+    <h2>批量导入客户</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <a href="/crm/app01/customer/file_download/">下载模板</a>
+        <input type="file" name="exfile"><span>只支持.xlsx文件类型</span>
+        <p><input type="submit" value="提交"></p>
+    </form>
+
+
+
+</div>
+{% endblock %}

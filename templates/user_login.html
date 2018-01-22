@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="row col-md-offset-4 log">
+        <img src="/static/images/login.png">
+    </div>
+    <h3 class="text-center">人生在勤，不索何获</h3>
+    <div class="row" style="margin-top: 100px">
+        <form class="form-horizontal" method="post">
+            <div class="form-group">
+                <label class="col-md-offset-3 col-md-2 control-label">用户名：</label>
+                <div class="col-md-3">
+                    {% csrf_token %}
+                    <input type="text" class="form-control username" name="username" placeholder="请输入用户名">
+
+                </div>
+                <label style="color:red;">{{ form.errors.username.0 }}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-offset-3 col-md-2 control-label">密码：</label>
+                <div class="col-md-3">
+                    <input type="password" name="password" class="form-control  password" placeholder="请输入密码">
+                </div>
+                <label style="color: red">{{ form.errors.password.0 }}{{ errors }}</label>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-3">
+                    <input type="submit" class="btn btn-primary" value="登录">
+                </div>
+                <label class="col-md-4 error_pwd"></label>
+            </div>
+
+        </form>
+    </div>
+</div>
+>
+</body>
+</html>

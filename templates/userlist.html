@@ -1,0 +1,38 @@
+{% extends "crud/layout.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="container">
+    <h2>客户列表</h2>
+    {% if customer_list %}
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>客户姓名</th>
+            <th>qq</th>
+            <th>接单时间</th>
+            <th>状态</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for obj in customer_list %}
+        <tr>
+            <td>{{ obj.customer.name }}</td>
+            <td>{{ obj.customer.qq }}</td>
+            <td>{{ obj.ctime }}</td>
+            <td>{{ obj.get_status_display }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
+
+    {% else %}
+        <h3>你还没有客户哦！</h3>
+    {% endif %}
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "crud/layout.html" %}
+{% load staticfiles %}
+   {% block css %}
+ <style>
+        .list_filter a{display:inline-block; padding: 5px 10px;margin: 5px 5px  ;border: 1px solid #1b6d85}
+        .list_filter a.active{background-color: #2e6da4;color: white}
+        .list_filter .verbose_name{
+                            line-height: 42px;
+                            float: left;
+                            text-align: right;
+                            font-size: 16px;
+                            font-weight: 500;}
+    </style>
+   {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>列表页面</h2>
+
+    {% if obj.show_add_btn %}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{{ obj.add_url}}?{{ obj.condition }}">添加</a>
+        </div>
+        <hr>
+    {% endif %}
+    {% if obj.show_comb %}
+        <div class="list_filter">
+        {% for filter_row_obj in obj.gen_comb_filter %}
+            <div>
+            {% for foo in filter_row_obj %}
+                    {{ foo }}
+            {% endfor %}
+            </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+
+    {% if obj.show_search %}
+    <form>
+        <div class="form-group">
+            <input class="form-control" name="{{ obj.search_key }}" value="{{ obj.condition_key }}" type="text" placeholder="请输入搜索条件" style="display: inline-block;width: 200px">
+            <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </form>
+    {% endif %}
+<form method="post">
+    {% if obj.show_actions %}
+        {% csrf_token %}
+        <div class="form-group">
+        <select name="action"  class="form-control" style="display: inline-block;width: 200px">
+            <option value="" >--------------</option>
+            {% for foo in obj.mudify_actions %}
+                <option value="{{ foo.name }}" >{{ foo.text }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-primary">执行</button>
+        </div>
+    {% endif %}
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            {% for head in obj.get_header %}
+            <th>{{ head }}</th>
+            {% endfor %}
+
+        </tr>
+        </thead>
+
+        <tbody class="tbody">
+        {% for data in obj.get_data_list %}
+            <tr>
+            {% for field in data %}
+            <td>{{ field }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+<div class="pull-right">
+    <ul class="pagination">
+        {{ obj.page_html|safe }}
+    </ul>
+</div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static "jquery-3.2.1.min.js" %}"></script>
+<script>
+    $("#select_all").click(function () {
+        var checkbox=$(".tbody input[type='checkbox']");
+        if (checkbox.attr("checked")){
+             checkbox.removeAttr("checked")
+        }
+        else{
+            checkbox.attr("checked","checked")
+
+        }
+
+    })
+</script>
+{% endblock %}

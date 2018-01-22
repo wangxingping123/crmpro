@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" href="{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}" />
+     <link rel="stylesheet" href="{% static "mycss/form-input.css" %}" />
+    {% block css %} {% endblock %}
+</head>
+<body>
+<div>
+    {% block content %} {% endblock %}
+</div>
+
+    {% block js %} {% endblock %}
+</body>
+</html>
